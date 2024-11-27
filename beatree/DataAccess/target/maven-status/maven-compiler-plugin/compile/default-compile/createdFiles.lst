@@ -1,7 +1,0 @@
-connection\MongoConnection.class
-interfaces\IIntegranteDAO.class
-com\mycompany\dataaccess\DataAccess.class
-models\Integrante.class
-interfaces\ICancionDAO.class
-models\Cancion.class
-dao\CancionDAO.class
