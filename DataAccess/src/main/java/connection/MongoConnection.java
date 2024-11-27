@@ -4,36 +4,39 @@
  */
 package connection;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoDatabase;
+
 /**
  *
  * @author martinez
  */
 public class MongoConnection {
-    private static final String dbhost = "localhost";
-    private static final int dbport = 27017;
-    private static final String dbname = "beatree";
-    
-    private static final String usuariosCollection = "usuarios";
-    private static final String artistasCollection = "artistas";
-    private static final String albumesCollection = "albumes";
-    
-    public static String getConnection(){
-        return String.format("mongodb://%s:%d", dbhost, dbport);
-    }
-    
-    public static String getDatabase(){
-        return dbname;
-    }
-    
-    public static String getUsuariosCollection(){
-        return usuariosCollection;
-    }
-    
-    public static String getArtistasCollection(){
-        return artistasCollection;
-    }
-    
-    public static String getAlbumesCollection(){
-        return albumesCollection;
-    }
+//    private static final String dbhost = "localhost";
+//    private static final int dbport = 27017;
+//    private static final String dbname = "beatree";
+//    
+//    private static final String usuariosCollection = "usuarios";
+//    private static final String artistasCollection = "artistas";
+//    private static final String albumesCollection = "albumes";
+//    
+//    public static String getConnection(){
+//        return String.format("mongodb://%s:%d", dbhost, dbport);
+//    }
+//    
+//    public static String getDatabase(){
+//        return dbname;
+//    }
+//    
+//    public static String getUsuariosCollection(){
+//        return usuariosCollection;
+//    }
+//    
+//    public static String getArtistasCollection(){
+//        return artistasCollection;
+//    }
+//    
+//    public static String getAlbumesCollection(){
+//        return albumesCollection;
+//    }
 }

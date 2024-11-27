@@ -9,6 +9,7 @@ import com.mongodb.client.MongoDatabase;
 import interfaces.ICancionDAO;
 import models.Cancion;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -24,10 +25,18 @@ public class CancionDAO implements ICancionDAO{
     
     @Override
     public void insertar(Cancion cancion) {
-        Document cancionDoc = new Document("_id", cancion.getId())
-                .append("titulo", cancion.getTitulo())
-                .append("duracion", cancion.getDuracion());
-        collection.insertOne(cancionDoc);
+        Document cancionDocument = new Document();
+        try {
+            cancionDocument.append("titulo", cancion.getTitulo())
+                    .append("duracion", cancion.getDuracion());
+            
+            collection.insertOne(cancionDocument);
+            
+            ObjectId objectId = cancionDocument.getObjectId("_id");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
     
 }
