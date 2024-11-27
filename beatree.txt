@@ -1,0 +1,87 @@
+use beatree
+
+db.usuarios.find({});
+db.artistas.find({});
+db.albumes.find({});
+
+db.usuarios.insertOne({
+    _id: ObjectId(),
+    nombre: "Angel",
+    apellido: "Sanchez",
+    correo: "angelsn03@gmail.com",
+    contrasenia: "$2b$12$TnFJrMSkjRmvI2X.bpsbHeJ8It/UgOd.CMzXfBy8Pdz.pPlfkm5Tm",
+    imagenPath: "url_de_imagen_opcional",
+    fechaRegistro: ISODate("2024-11-27"),
+    favoritos: {
+        canciones: [ObjectId("64a7d2d1f8c3a5b4d0b1e1f9"), ObjectId("64a7d2d1f8c3a5b4d0b1e1fa")],  // IDs de canciones favoritas
+        albumes: [ObjectId("64a7d2d1f8c3a5b4d0b1e1fb")],  // IDs de álbumes favoritos
+        artistas: [ObjectId("64a7d2d1f8c3a5b4d0b1e1fc")]  // IDs de artistas favoritos
+    }
+});
+
+db.artistas.insertOne({
+    _id: ObjectId(),
+    nombre: "La Máquina de Hacer Pájaros",
+    tipo: "banda",
+    imagenPath: "url_imagen_banda",
+    genero: "Rock Progresivo",
+    integrantes: [
+        {
+            _id: ObjectId(),
+            nombre: "Carlos Alberto",
+            apellido: "García",
+            rol: "Vocalista y Tecladista",
+            fechaIngreso: ISODate("1982-01-01"),
+            estadoActivo: true  
+        },
+        {
+            _id: ObjectId(),
+            nombre: "Rodrigo",
+            apellido: "Páez",
+            rol: "Tecladista y Compositor",
+            fechaIngreso: ISODate("1982-01-01"),
+            estadoActivo: true  
+        },
+        {
+            _id: ObjectId(),
+            nombre: "Omar",
+            apellido: "Chaves",
+            rol: "Bajista",
+            fechaIngreso: ISODate("1982-01-01"),
+            fechaSalida: ISODate("1983-12-31"),  
+            estadoActivo: false  
+        }
+    ]
+});
+
+
+db.albumes.insertOne({
+    _id: ObjectId(),
+    nombre: "Películas",
+    fechaLanzamiento: ISODate("1982-01-01"),  
+    genero: "Rock Progresivo",
+    portadaPath: "url_imagen_portada_peliculas", 
+    canciones: [
+        {
+            _id: ObjectId(),
+            titulo: "El Anillo del Capitán Beto",
+            duracion: "6:45" 
+        },
+        {
+            _id: ObjectId(),
+            titulo: "La Colina de la Vida",
+            duracion: "5:00"
+        },
+        {
+            _id: ObjectId(),
+            titulo: "La Máquina de Hacer Pájaros",
+            duracion: "4:30"
+        },
+        {
+            _id: ObjectId(),
+            titulo: "Cuentos de la Resistencia",
+            duracion: "3:50"
+        }
+    ],
+    artista: ObjectId("id_del_artista")
+});
