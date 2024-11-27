@@ -7,14 +7,14 @@ import org.bson.types.ObjectId;
  *
  * @author Acer
  */
-public class Favoritos {
+public class Favorito {
     private List<Cancion> canciones;
-//    private List<Album> albumes;
+    private List<Album> albumes;
 //    private List<Artista> artistas;
 
     
     // Constructor
-//    public Favoritos(List<Cancion> canciones, List<Album> albumes, List<Artista> artistas) {
+//    public Favorito(List<Cancion> canciones, List<Album> albumes, List<Artista> artistas) {
 //        this.canciones = canciones;
 //        this.albumes = albumes;
 //        this.artistas = artistas;

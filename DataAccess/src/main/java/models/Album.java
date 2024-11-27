@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Acer
  */
-public class Albumes {
+public class Album {
     private String id;
     private String nombre;
     private Date fechaLanzamiento;
@@ -16,14 +16,14 @@ public class Albumes {
     private List<Cancion> canciones;
     //private Artista artistaId;
 
-    public Albumes() {
+    public Album() {
     }
 
-    public Albumes(String id) {
+    public Album(String id) {
         this.id = id;
     }
 
-    public Albumes(String nombre, Date fechaLanzamiento, String genero, String portadaPath, List<Cancion> canciones){//,Artista artistaId) {
+    public Album(String nombre, Date fechaLanzamiento, String genero, String portadaPath, List<Cancion> canciones){//,Artista artistaId) {
         this.nombre = nombre;
         this.fechaLanzamiento = fechaLanzamiento;
         this.genero = genero;
@@ -32,7 +32,7 @@ public class Albumes {
        // this.artistaId = artistaId;
     }
 
-    public Albumes(String id, String nombre, Date fechaLanzamiento, String genero, String portadaPath, List<Cancion> canciones){//,Artista artistaId) {
+    public Album(String id, String nombre, Date fechaLanzamiento, String genero, String portadaPath, List<Cancion> canciones){//,Artista artistaId) {
         this.id = id;
         this.nombre = nombre;
         this.fechaLanzamiento = fechaLanzamiento;

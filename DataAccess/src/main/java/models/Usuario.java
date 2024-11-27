@@ -6,23 +6,23 @@ import java.util.Date;
  *
  * @author Acer
  */
-public class Usuarios {
+public class Usuario {
     private String id;
     private String nombre;
     private String apellido;
     private String correo;
     private String imagenPath;
     private Date fechaRegistro;
-    private Favoritos favoritos;
+    private Favorito favoritos;
 
-    public Usuarios() {
+    public Usuario() {
     }
 
-    public Usuarios(String id) {
+    public Usuario(String id) {
         this.id = id;
     }
 
-    public Usuarios(String nombre, String apellido, String correo, String imagenPath, Date fechaRegistro, Favoritos favoritos) {
+    public Usuario(String nombre, String apellido, String correo, String imagenPath, Date fechaRegistro, Favorito favoritos) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
@@ -31,7 +31,7 @@ public class Usuarios {
         this.favoritos = favoritos;
     }
 
-    public Usuarios(String id, String nombre, String apellido, String correo, String imagenPath, Date fechaRegistro, Favoritos favoritos) {
+    public Usuario(String id, String nombre, String apellido, String correo, String imagenPath, Date fechaRegistro, Favorito favoritos) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -89,11 +89,11 @@ public class Usuarios {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Favoritos getFavoritos() {
+    public Favorito getFavoritos() {
         return favoritos;
     }
 
-    public void setFavoritos(Favoritos favoritos) {
+    public void setFavoritos(Favorito favoritos) {
         this.favoritos = favoritos;
     }
 
