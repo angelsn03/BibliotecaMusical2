@@ -16,6 +16,8 @@ public class frmMenu extends javax.swing.JFrame {
     public frmMenu() {
         initComponents();
         
+        setLocationRelativeTo(null);
+        
         grupo = new ButtonGroup();
         
         grupo.add(btnCanciones);

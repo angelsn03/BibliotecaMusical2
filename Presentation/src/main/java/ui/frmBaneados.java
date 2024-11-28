@@ -19,6 +19,7 @@ public class frmBaneados extends javax.swing.JFrame {
     public frmBaneados() {
         initComponents();
         
+        setLocationRelativeTo(null);
         grupo = new ButtonGroup();
         
         grupo.add(btnCanciones);

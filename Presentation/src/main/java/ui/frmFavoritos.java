@@ -19,6 +19,7 @@ public class frmFavoritos extends javax.swing.JFrame {
     public frmFavoritos() {
         initComponents();
         
+        setLocationRelativeTo(null);
         grupo = new ButtonGroup();
         
         grupo.add(btnCanciones);

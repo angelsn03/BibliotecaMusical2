@@ -11,6 +11,7 @@ public class frmRegistrar extends javax.swing.JFrame {
      */
     public frmRegistrar() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
