@@ -10,15 +10,14 @@ import org.bson.types.ObjectId;
 public class Favorito {
     private List<Cancion> canciones;
     private List<Album> albumes;
-//    private List<Artista> artistas;
+    private List<Artista> artistas;
 
     
-    // Constructor
-//    public Favorito(List<Cancion> canciones, List<Album> albumes, List<Artista> artistas) {
-//        this.canciones = canciones;
-//        this.albumes = albumes;
-//        this.artistas = artistas;
-//    }
+    public Favorito(List<Cancion> canciones, List<Album> albumes, List<Artista> artistas) {
+        this.canciones = canciones;
+        this.albumes = albumes;
+        this.artistas = artistas;
+    }
 
     public List<Cancion> getCanciones() {
         return canciones;
@@ -28,21 +27,21 @@ public class Favorito {
         this.canciones = canciones;
     }
 
-//    public List<Album> getAlbumes() {
-//        return albumes;
-//    }
-//
-//    public void setAlbumes(List<Album> albumes) {
-//        this.albumes = albumes;
-//    }
-//
-//    public List<Artista> getArtistas() {
-//        return artistas;
-//    }
-//
-//    public void setArtistas(List<Artista> artistas) {
-//        this.artistas = artistas;
-//    }
+    public List<Album> getAlbumes() {
+        return albumes;
+    }
+
+    public void setAlbumes(List<Album> albumes) {
+        this.albumes = albumes;
+    }
+
+    public List<Artista> getArtistas() {
+        return artistas;
+    }
+
+    public void setArtistas(List<Artista> artistas) {
+        this.artistas = artistas;
+    }
 
     @Override
     public String toString() {
