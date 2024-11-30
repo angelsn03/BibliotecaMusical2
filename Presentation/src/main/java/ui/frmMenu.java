@@ -2,6 +2,7 @@
 package ui;
 
 import javax.swing.ButtonGroup;
+import services.ArtistaService;
 
 /**
  *
@@ -45,6 +46,7 @@ public class frmMenu extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        btnInsercion = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +104,13 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
 
+        btnInsercion.setText("Insercion");
+        btnInsercion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsercionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,7 +136,9 @@ public class frmMenu extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnInsercion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 30, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -147,7 +158,8 @@ public class frmMenu extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCanciones)
                         .addComponent(btnArtistas)
-                        .addComponent(btnAlbumes)))
+                        .addComponent(btnAlbumes)
+                        .addComponent(btnInsercion)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -188,6 +200,11 @@ public class frmMenu extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void btnInsercionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsercionActionPerformed
+        ArtistaService service = new ArtistaService();
+        service.insertarDatosMasivos();
+    }//GEN-LAST:event_btnInsercionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -227,6 +244,9 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnAlbumes;
     private javax.swing.JToggleButton btnArtistas;
     private javax.swing.JToggleButton btnCanciones;
+    private javax.swing.JToggleButton btnInsercion;
+    private javax.swing.JButton btnInsertar;
+    private javax.swing.JButton btnInsertar1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

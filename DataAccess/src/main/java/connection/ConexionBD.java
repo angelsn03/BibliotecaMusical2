@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package connection;
 
 import com.mongodb.MongoClientSettings;
@@ -39,4 +35,12 @@ public class ConexionBD implements IConexionBD{
         return database;
     }
     
+    public void cerrarConexion(){
+        if (mongoClient != null) {
+            mongoClient.close();
+            mongoClient = null;
+            database = null;
+            System.out.println("La conexion se ha cerrado correctamente");
+        }
+    }
 }

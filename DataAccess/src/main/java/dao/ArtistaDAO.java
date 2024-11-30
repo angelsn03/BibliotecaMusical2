@@ -9,6 +9,7 @@ import interfaces.IArtistaDAO;
 import java.util.ArrayList;
 import java.util.List;
 import models.Artista;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 /**
@@ -60,5 +61,17 @@ public class ArtistaDAO implements IArtistaDAO{
         MongoCollection<Artista> collection = getCollection();
         collection.deleteOne(eq("_id", new ObjectId(id)));
         System.out.println("Artista eliminado correctamente.");
+    }
+    
+    public void insertArtistasYAlbumes(List<Document> artistas, List<Document> albumes) {
+        ConexionBD conexion = new ConexionBD();
+        MongoDatabase database = conexion.crearConexion();
+        MongoCollection<Document> artistasCollection = database.getCollection("artistas");
+        MongoCollection<Document> albumesCollection = database.getCollection("albumes");
+
+        artistasCollection.insertMany(artistas);
+        albumesCollection.insertMany(albumes);
+
+        conexion.cerrarConexion();
     }
 }

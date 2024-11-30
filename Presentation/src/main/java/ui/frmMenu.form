@@ -47,6 +47,8 @@
                               <Component id="btnArtistas" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnAlbumes" min="-2" pref="100" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnInsercion" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="30" max="32767" attributes="0"/>
@@ -74,6 +76,7 @@
                       <Component id="btnCanciones" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnArtistas" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnAlbumes" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnInsercion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -172,6 +175,14 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JToggleButton" name="btnInsercion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Insercion"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInsercionActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
