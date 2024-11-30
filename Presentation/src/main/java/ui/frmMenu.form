@@ -138,6 +138,7 @@
         <Property name="text" type="java.lang.String" value="Canciones"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCancionesMouseClicked"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancionesActionPerformed"/>
       </Events>
     </Component>
@@ -145,11 +146,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Artistas"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnArtistasMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="btnAlbumes">
       <Properties>
         <Property name="text" type="java.lang.String" value="Albumes"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAlbumesMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>

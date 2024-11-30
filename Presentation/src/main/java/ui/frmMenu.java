@@ -1,7 +1,15 @@
 
 package ui;
 
+import interfaces.IAlbumService;
+import interfaces.IArtistaService;
+import java.util.List;
 import javax.swing.ButtonGroup;
+import javax.swing.table.DefaultTableModel;
+import models.Album;
+import models.Artista;
+import models.Cancion;
+import services.AlbumService;
 import services.ArtistaService;
 
 /**
@@ -10,7 +18,11 @@ import services.ArtistaService;
  */
 public class frmMenu extends javax.swing.JFrame {
 
+    private IAlbumService albumService;
+    private IArtistaService artistaService;
     private ButtonGroup grupo;
+    private List<Artista> artistas;
+    private List<Album> albumes;
     /**
      * Creates new form frmMenu
      */
@@ -24,6 +36,12 @@ public class frmMenu extends javax.swing.JFrame {
         grupo.add(btnCanciones);
         grupo.add(btnArtistas);
         grupo.add(btnAlbumes);
+        
+        this.artistaService = new ArtistaService();
+        this.albumService = new AlbumService();
+        
+        this.artistas = artistaService.obtenerTodosLosArtistas();
+        this.albumes = albumService.obtenerTodosLosAlbumes();
     }
 
     /**
@@ -75,6 +93,11 @@ public class frmMenu extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         btnCanciones.setText("Canciones");
+        btnCanciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancionesMouseClicked(evt);
+            }
+        });
         btnCanciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancionesActionPerformed(evt);
@@ -82,8 +105,18 @@ public class frmMenu extends javax.swing.JFrame {
         });
 
         btnArtistas.setText("Artistas");
+        btnArtistas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnArtistasMouseClicked(evt);
+            }
+        });
 
         btnAlbumes.setText("Albumes");
+        btnAlbumes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAlbumesMouseClicked(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setText("Inicio");
@@ -173,8 +206,47 @@ public class frmMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // proximamente añadir una función en la que cuando selecciones 
+    // un artista en alguna parte se despliegue la info de los integrantes
+    private void cargarArtistas(){
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        model.setColumnIdentifiers(new String[]{"ID", "Imagen", "Nombre", "Tipo", "Género"});
+        
+        for (Artista a : artistas) {
+            model.addRow(new Object[]{
+                a.getId(), a.getImagenPath(), a.getNombre(), a.getTipo(), a.getGenero()
+            });
+        }
+    }
     
+    private void cargarAlbumes(){
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        model.setColumnIdentifiers(new String[]{"ID", "Portada", "Nombre", "Fecha de Lanzamiento", "Género", "Cantidad de Canciones"});
+        
+        for (Album a : albumes) {
+            model.addRow(new Object[]{
+                a.getId(), a.getPortadaPath(), a.getNombre(), a.getFechaLanzamiento(), a.getGenero(), a.getCanciones().size()
+            });
+        }
+    }
     
+    private void cargarCanciones(){
+       DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); 
+       model.setRowCount(0);
+       model.setColumnIdentifiers(new String[]{"ID", "Portada", "Título", "Album", "Duración"});
+       
+       for (Album a : albumes) {
+        for (Cancion c : a.getCanciones()) {
+            model.addRow(new Object[]{
+                c.getId(), a.getPortadaPath(), c.getTitulo(), a.getNombre(), c.getDuracion()
+            });
+        }
+    }
+    }
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -204,6 +276,18 @@ public class frmMenu extends javax.swing.JFrame {
         ArtistaService service = new ArtistaService();
         service.insertarDatosMasivos();
     }//GEN-LAST:event_btnInsercionActionPerformed
+
+    private void btnCancionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancionesMouseClicked
+        cargarCanciones();
+    }//GEN-LAST:event_btnCancionesMouseClicked
+
+    private void btnArtistasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnArtistasMouseClicked
+        cargarArtistas();
+    }//GEN-LAST:event_btnArtistasMouseClicked
+
+    private void btnAlbumesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlbumesMouseClicked
+        cargarAlbumes();
+    }//GEN-LAST:event_btnAlbumesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -245,8 +329,6 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnArtistas;
     private javax.swing.JToggleButton btnCanciones;
     private javax.swing.JToggleButton btnInsercion;
-    private javax.swing.JButton btnInsertar;
-    private javax.swing.JButton btnInsertar1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
