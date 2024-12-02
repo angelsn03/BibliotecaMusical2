@@ -1,5 +1,6 @@
 connection\MongoConnection.class
 com\mycompany\dataaccess\DataAccess.class
+models\Albumes.class
 interfaces\IArtistaDAO.class
 models\Cancion.class
 models\Usuario.class

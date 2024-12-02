@@ -42,6 +42,9 @@ public class frmMenu extends javax.swing.JFrame {
         
         this.artistas = artistaService.obtenerTodosLosArtistas();
         this.albumes = albumService.obtenerTodosLosAlbumes();
+        
+        
+        cargarArtistas();
     }
 
     /**

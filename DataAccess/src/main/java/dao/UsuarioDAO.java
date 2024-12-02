@@ -7,6 +7,7 @@ import static com.mongodb.client.model.Filters.eq;
 import connection.ConexionBD;
 import interfaces.IUsuarioDAO;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import models.Usuario;
 import org.bson.types.ObjectId;
@@ -19,12 +20,17 @@ public class UsuarioDAO implements IUsuarioDAO{
     private MongoCollection getCollection() {
         ConexionBD conexion = new ConexionBD();
         MongoDatabase database = conexion.crearConexion();
-        MongoCollection collection = database.getCollection("artistas", Usuario.class);
+        MongoCollection collection = database.getCollection("usuarios", Usuario.class);
         return collection;
     }
     
     @Override
     public void insertar(Usuario usuario) {
+        //Verifica que la fecha de registro no este asignada
+        if (usuario.getFechaRegistro() == null) {
+            //Asigna la fecha de registro
+            usuario.setFechaRegistro(new Date());
+        }
         MongoCollection<Usuario> collection = getCollection();
         collection.insertOne(usuario);
         System.out.println("Usuario insertado correctamente.");

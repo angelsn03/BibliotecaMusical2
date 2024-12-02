@@ -45,6 +45,40 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
         this.favoritos = favoritos;
     }
+    /**
+     * Constructor sin la fecha de registro, dado que la toma del sistema
+     * @param id
+     * @param nombre
+     * @param apellido
+     * @param correo
+     * @param contrasenia
+     * @param imagenPath
+     * @param favoritos 
+     */
+    public Usuario(ObjectId id, String nombre, String apellido, String correo, String contrasenia, String imagenPath, List<Favorito> favoritos) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.imagenPath = imagenPath;
+        this.favoritos = favoritos;
+    }
+    /**
+     * Constructor para registrar usuarios
+     * @param nombre
+     * @param apellido
+     * @param correo
+     * @param contrasenia 
+     */
+    public Usuario(String nombre, String apellido, String correo, String contrasenia) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+    }
+    
+    
 
     public ObjectId getId() {
         return id;

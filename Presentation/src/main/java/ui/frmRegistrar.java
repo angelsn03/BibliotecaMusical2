@@ -3,6 +3,8 @@ package ui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import models.Usuario;
+import services.UsuarioService;
 
 /**
  *
@@ -165,6 +167,7 @@ public class frmRegistrar extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -180,18 +183,47 @@ public class frmRegistrar extends javax.swing.JFrame {
             String correo = txtCorreo.getText();
             String contra = new String(txtContrasena.getPassword());
             
-             // Verificar que los campos no estén vacíos
+            // Verificar que los campos no estén vacíos
         if (nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || contra.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-            
-        }catch(Exception e){
-             Logger.getLogger(frmRegistrar.class.getName()).log(Level.SEVERE, null, e);
+        // Crear el objeto UsuarioDTO para pasarlo al servicio de negocio
+        Usuario usuarioN = new Usuario(nombre, apellido, correo, contra);
+        usuarioN.setNombre(nombre);
+        usuarioN.setApellido(apellido);
+        usuarioN.setCorreo(correo);
+        usuarioN.setContrasenia(contra);
+        // Conectar con la capa de negocio (UsuarioService) para registrar el usuario
+        UsuarioService usuarioService = new UsuarioService();
+        
+        // registra el usuario
+        boolean registrado = usuarioService.registrarUsuario(usuarioN);
+        
+        if (registrado) {
+            JOptionPane.showMessageDialog(this, "Usuario registrado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            limpiarFormulario();
+            frmInicio reg = new frmInicio();
+            reg.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Hubo un error al registrar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+    } catch (Exception e) {
+        Logger.getLogger(frmRegistrar.class.getName()).log(Level.SEVERE, null, e);
+        JOptionPane.showMessageDialog(this, "Hubo un error inesperado", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnRegistrar1ActionPerformed
 
+    private void limpiarFormulario() {
+    txtNombre.setText("");
+    txtApellido.setText("");
+    txtCorreo.setText("");
+    txtContrasena.setText("");
+    // Si tienes más campos, los puedes limpiar de la misma forma
+}
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
