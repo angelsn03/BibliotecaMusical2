@@ -53,6 +53,11 @@ public class UsuarioDAO implements IUsuarioDAO{
         MongoCollection<Usuario> collection = getCollection();
         return collection.find(eq("_id", new ObjectId(id))).first();
     }
+    
+    public Usuario buscarPorCorreo(String correo){
+        MongoCollection<Usuario> collection = getCollection();
+        return collection.find(eq("correo", correo)).first();
+    }
 
     @Override
     public void actualizar(String id, Usuario usuarioActualizado) {
