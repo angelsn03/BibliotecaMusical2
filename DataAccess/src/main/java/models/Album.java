@@ -24,21 +24,21 @@ public class Album {
         this.id = id;
     }
 
-    public Album(String nombre, Date fechaLanzamiento, String genero, String portadaPath, List<Cancion> canciones){//,Artista artistaId) {
+    public Album(String nombre, Date fechaLanzamiento, String genero, List<Cancion> canciones){//,Artista artistaId) {
         this.nombre = nombre;
         this.fechaLanzamiento = fechaLanzamiento;
         this.genero = genero;
-        this.portadaPath = portadaPath;
+        this.portadaPath = "/albumes/"+nombre+".png";
         this.canciones = canciones;
        // this.artistaId = artistaId;
     }
 
-    public Album(ObjectId id, String nombre, Date fechaLanzamiento, String genero, String portadaPath, List<Cancion> canciones){//,Artista artistaId) {
+    public Album(ObjectId id, String nombre, Date fechaLanzamiento, String genero, List<Cancion> canciones){//,Artista artistaId) {
         this.id = id;
         this.nombre = nombre;
         this.fechaLanzamiento = fechaLanzamiento;
         this.genero = genero;
-        this.portadaPath = portadaPath;
+        this.portadaPath = "/albumes/"+nombre+".png";
         this.canciones = canciones;
        // this.artistaId = artistaId;
     }

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package models;
 
 import java.time.LocalDate;
@@ -24,11 +21,11 @@ public class Artista {
     public Artista() {
     }
 
-    public Artista(String nombre, String tipo, String imagenPath, String genero, List<Integrante> integrantes) {
+    public Artista(String nombre, String tipo, String genero, List<Integrante> integrantes) {
         this.id = new ObjectId();
         this.nombre = nombre;
         this.tipo = tipo;
-        this.imagenPath = imagenPath;
+        this.imagenPath = "/artistas/"+nombre+".png";
         this.genero = genero;
         this.integrantes = integrantes;
     }

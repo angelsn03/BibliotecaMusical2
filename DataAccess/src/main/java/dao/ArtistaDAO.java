@@ -8,6 +8,7 @@ import connection.ConexionBD;
 import interfaces.IArtistaDAO;
 import java.util.ArrayList;
 import java.util.List;
+import models.Album;
 import models.Artista;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -64,14 +65,57 @@ public class ArtistaDAO implements IArtistaDAO{
         System.out.println("Artista eliminado correctamente.");
     }
     
-    public void insertArtistasYAlbumes(List<Document> artistas, List<Document> albumes) {
+//    public void insertArtistasYAlbumes(List<Document> artistas, List<Document> albumes) {
+//        ConexionBD conexion = new ConexionBD();
+//        MongoDatabase database = conexion.crearConexion();
+//        MongoCollection<Document> artistasCollection = database.getCollection("artistas");
+//        MongoCollection<Document> albumesCollection = database.getCollection("albumes");
+//
+//        artistasCollection.insertMany(artistas);
+//        albumesCollection.insertMany(albumes);
+//
+//        conexion.cerrarConexion();
+//    }
+    
+    public void insertArtistasYAlbumes(List<Artista> artistas, List<Album> albumes) {
         ConexionBD conexion = new ConexionBD();
         MongoDatabase database = conexion.crearConexion();
         MongoCollection<Document> artistasCollection = database.getCollection("artistas");
         MongoCollection<Document> albumesCollection = database.getCollection("albumes");
 
-        artistasCollection.insertMany(artistas);
-        albumesCollection.insertMany(albumes);
+        // Convertir los artistas a Document
+        List<Document> artistasDocs = artistas.stream().map(artista -> {
+            Document doc = new Document("nombre", artista.getNombre())
+                    .append("tipo", artista.getTipo())
+                    .append("imagenPath", artista.getImagenPath())
+                    .append("género", artista.getGenero())
+                    .append("integrantes", artista.getIntegrantes().stream().map(integrante -> 
+                        new Document("nombre", integrante.getNombre())
+                            .append("apellido", integrante.getApellido())
+                            .append("rol", integrante.getRol())
+                            .append("fechaIngreso", integrante.getFechaIngreso())
+                            .append("fechaSalida", integrante.getFechaSalida())
+                            .append("estadoActivo", integrante.isEstadoActivo())
+                    ).toList());
+            return doc;
+        }).toList();
+
+        // Convertir los álbumes a Document
+        List<Document> albumesDocs = albumes.stream().map(album -> {
+            Document doc = new Document("nombre", album.getNombre())
+                    .append("fechaLanzamiento", album.getFechaLanzamiento())
+                    .append("género", album.getGenero())
+                    .append("portadaPath", album.getPortadaPath())
+                    .append("canciones", album.getCanciones().stream().map(cancion -> 
+                        new Document("título", cancion.getTitulo())
+                            .append("duración", cancion.getDuracion())
+                    ).toList());
+            return doc;
+        }).toList();
+
+        // Inserción masiva
+        artistasCollection.insertMany(artistasDocs);
+        albumesCollection.insertMany(albumesDocs);
 
         conexion.cerrarConexion();
     }
