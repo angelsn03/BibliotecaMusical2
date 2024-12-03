@@ -8,7 +8,6 @@ package models;
 import java.util.Date;
 
 public class Integrante {
-    private String id; 
     private String nombre;
     private String apellido;
     private String rol;
@@ -18,16 +17,6 @@ public class Integrante {
 
     public Integrante() {}
 
-    public Integrante(String id, String nombre, String apellido, String rol, Date fechaIngreso, Date fechaSalida, boolean estadoActivo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.rol = rol;
-        this.fechaIngreso = fechaIngreso;
-        this.fechaSalida = fechaSalida;
-        this.estadoActivo = estadoActivo;
-    }
-
     public Integrante(String nombre, String apellido, String rol, Date fechaIngreso, Date fechaSalida, boolean estadoActivo) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -35,14 +24,6 @@ public class Integrante {
         this.fechaIngreso = fechaIngreso;
         this.fechaSalida = fechaSalida;
         this.estadoActivo = estadoActivo;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNombre() {

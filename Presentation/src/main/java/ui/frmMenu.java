@@ -93,6 +93,7 @@ public class frmMenu extends javax.swing.JFrame {
 
             }
         ));
+        jTable1.setRowHeight(45);
         jScrollPane1.setViewportView(jTable1);
 
         btnCanciones.setText("Canciones");
@@ -215,11 +216,11 @@ public class frmMenu extends javax.swing.JFrame {
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.setColumnIdentifiers(new String[]{"ID", "Imagen", "Nombre", "Tipo", "Género"});
+        model.setColumnIdentifiers(new String[]{"Imagen", "Nombre", "Tipo", "Género"});
         
         for (Artista a : artistas) {
             model.addRow(new Object[]{
-                a.getId(), a.getImagenPath(), a.getNombre(), a.getTipo(), a.getGenero()
+                a.getImagenPath(), a.getNombre(), a.getTipo(), a.getGenero()
             });
         }
     }
@@ -228,11 +229,11 @@ public class frmMenu extends javax.swing.JFrame {
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.setColumnIdentifiers(new String[]{"ID", "Portada", "Nombre", "Fecha de Lanzamiento", "Género", "Cantidad de Canciones"});
+        model.setColumnIdentifiers(new String[]{"Portada", "Nombre", "Fecha de Lanzamiento", "Género", "Cantidad de Canciones"});
         
         for (Album a : albumes) {
             model.addRow(new Object[]{
-                a.getId(), a.getPortadaPath(), a.getNombre(), a.getFechaLanzamiento(), a.getGenero(), a.getCanciones().size()
+                a.getPortadaPath(), a.getNombre(), a.getFechaLanzamiento(), a.getGenero(), a.getCanciones().size()
             });
         }
     }
@@ -240,12 +241,12 @@ public class frmMenu extends javax.swing.JFrame {
     private void cargarCanciones(){
        DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); 
        model.setRowCount(0);
-       model.setColumnIdentifiers(new String[]{"ID", "Portada", "Título", "Album", "Duración"});
+       model.setColumnIdentifiers(new String[]{"Portada", "Título", "Album", "Duración"});
        
        for (Album a : albumes) {
         for (Cancion c : a.getCanciones()) {
             model.addRow(new Object[]{
-                c.getId(), a.getPortadaPath(), c.getTitulo(), a.getNombre(), c.getDuracion()
+                a.getPortadaPath(), c.getTitulo(), a.getNombre(), c.getDuracion()
             });
         }
     }

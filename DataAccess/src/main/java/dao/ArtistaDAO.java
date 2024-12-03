@@ -17,6 +17,7 @@ import org.bson.types.ObjectId;
  * @author angelsn
  */
 public class ArtistaDAO implements IArtistaDAO{
+    
     private MongoCollection getCollection() {
         ConexionBD conexion = new ConexionBD();
         MongoDatabase database = conexion.crearConexion();
