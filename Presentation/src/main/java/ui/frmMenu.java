@@ -7,11 +7,15 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -36,6 +40,8 @@ public class frmMenu extends javax.swing.JFrame {
     private List<Artista> artistas;
     private List<Album> albumes;
     private String busqueda;
+    private List<String> generos;
+    private LocalDate fechaFiltro;
     /**
      * Creates new form frmMenu
      */
@@ -52,7 +58,16 @@ public class frmMenu extends javax.swing.JFrame {
         this.artistas = artistaService.obtenerTodosLosArtistas();
         this.albumes = albumService.obtenerTodosLosAlbumes();
         
+        this.generos = albumes.stream()
+                .map(Album::getGenero)
+                .distinct()
+                .collect(Collectors.toList());
         busqueda = jTextField1.getText();
+        for (String genero : generos) {
+            jComboBoxGeneros.addItem(genero);
+        }
+        
+        fechaFiltro = datePicker1.getDate();
         
         //Metodo para el llenado de los campos seleccionados de la tabla
         jTableCanciones.addMouseListener(new MouseAdapter() {
@@ -104,12 +119,12 @@ public class frmMenu extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableArtistas = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxGeneros = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
         jLabel5 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxFecha = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -199,7 +214,7 @@ public class frmMenu extends javax.swing.JFrame {
         jTableArtistas.setRowHeight(60);
         jScrollPane3.setViewportView(jTableArtistas);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Género" }));
+        jComboBoxGeneros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---" }));
 
         jLabel4.setText("Género");
 
@@ -213,7 +228,7 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Antes de", "Después de" }));
+        jComboBoxFecha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---", "Antes de", "Después de" }));
 
         jButton3.setText("Buscar");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -253,14 +268,14 @@ public class frmMenu extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jComboBoxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jComboBoxGeneros, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -337,10 +352,10 @@ public class frmMenu extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxGeneros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -382,6 +397,7 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         cargarCancionesFiltradas(albumes, jTableAlbumes, busqueda);
+        cargarAlbumesFiltrados(albumes, jTableAlbumes, fechaFiltro, jComboBoxFecha, generos);
     }//GEN-LAST:event_jButton3MouseClicked
 
     // proximamente añadir una función en la que cuando selecciones 
@@ -416,12 +432,12 @@ public class frmMenu extends javax.swing.JFrame {
     private void cargarCanciones(List<Album> albumes, JTable table){
        DefaultTableModel model = (DefaultTableModel) table.getModel(); 
        model.setRowCount(0);
-       model.setColumnIdentifiers(new String[]{"Portada", "Título", "Album", "Duración"});
+       model.setColumnIdentifiers(new String[]{"Título", "Album", "Género", "Duración"});
        
        for (Album a : albumes) {
             for (Cancion c : a.getCanciones()) {
                 model.addRow(new Object[]{
-                    a.getImageIcon(), c.getTitulo(), a.getNombre(), c.getDuracion()
+                    c.getTitulo(), a.getNombre(), a.getGenero(), c.getDuracion()
                 });
             }
         }
@@ -445,10 +461,16 @@ public class frmMenu extends javax.swing.JFrame {
         table.getColumnModel().getColumn(0).setPreferredWidth(25);
     }
     
+    /**
+     * 
+     * @param albumes
+     * @param table
+     * @param busqueda 
+     */
     private void cargarCancionesFiltradas(List<Album> albumes, JTable table, String busqueda){
        DefaultTableModel model = (DefaultTableModel) table.getModel(); 
        model.setRowCount(0);
-       model.setColumnIdentifiers(new String[]{"Portada", "Título", "Album", "Duración"});
+       model.setColumnIdentifiers(new String[]{"Título", "Album", "Género", "Duración"});
        
        Pattern patron = Pattern.compile(busqueda, Pattern.CASE_INSENSITIVE);
 
@@ -460,13 +482,103 @@ public class frmMenu extends javax.swing.JFrame {
                 // Si el nombre del álbum o el título de la canción coincide con la búsqueda
                 if (matcherAlbum.find() || matcherCancion.find()) {
                     model.addRow(new Object[]{
-                        a.getImageIcon(), c.getTitulo(), a.getNombre(), c.getDuracion()
+                        c.getTitulo(), a.getNombre(), a.getGenero(), c.getDuracion()
                     });
                 }
             }
         }
         cargarImagenes(table);
     }
+    
+    /**
+     * Método que carga en la tabla los albumes con sus respectivos filtros
+     * @param albumes lista de albumes que serán filtrados y cargados dentro de la tabla
+     * @param table tabla donde serán cargados los datos
+     * @param fecha fecha usada para filtrar las canciones
+     * @param comboBoxFecha comboBox que determina si se buscarán los albumes 
+     * ,si la opcion seleccionada es "---" entonces no se aplicará este filtro
+     * "Antes de" o "Despues de" dependiendo de la elección del usuario dentro del comboBox
+     * @param comboBoxGeneros Combobox que filtra las canciones dependiendo del género elegido
+     * ,si la opcion seleccionada es "---" entonces no se aplicará este filtro
+     */
+    private void cargarAlbumesFiltrados(List<Album> albumes, JTable table, LocalDate fecha, JComboBox<String> comboBoxFecha, JComboBox<String> comboBoxGeneros) {
+        String filtroFecha = comboBoxFecha.getSelectedItem().toString();
+        String filtroGenero = comboBoxGeneros.getSelectedItem().toString();
+
+        List<Album> albumesFiltrados = aplicarFiltros(
+            albumes, fecha, filtroFecha, filtroGenero, Album::getFechaLanzamiento, Album::getGenero
+        );
+
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        model.setColumnIdentifiers(new String[]{"Portada", "Nombre", "Fecha de Lanzamiento", "Género"});
+
+        for (Album a : albumesFiltrados) {
+            model.addRow(new Object[]{
+                a.getImageIcon(), a.getNombre(), a.getFechaLanzamiento(), a.getGenero()
+            });
+        }
+        table.setModel(model);
+        cargarImagenes(table);
+    }
+
+    private void cargarArtistasFiltrados(List<Artista> artistas, JTable table, LocalDate fecha, JComboBox<String> comboBoxFecha, JComboBox<String> comboBoxGeneros) {
+        String filtroFecha = comboBoxFecha.getSelectedItem().toString();
+        String filtroGenero = comboBoxGeneros.getSelectedItem().toString();
+
+        // Filtrar los artistas según los filtros de fecha y género
+        List<Artista> artistasFiltrados;
+        artistasFiltrados = aplicarFiltros(artistas,
+                fecha,
+                filtroFecha,
+                filtroGenero, artista -> artista.getFechaIngreso(), // Aquí accedemos a la fecha de ingreso de los artistas
+                Artista::getGenero // Aquí accedemos al género del artista
+        );
+
+        // Cargar los artistas filtrados en la tabla
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        model.setColumnIdentifiers(new String[]{"Imagen", "Nombre", "Tipo", "Género"});
+
+        for (Artista a : artistasFiltrados) {
+            model.addRow(new Object[]{
+                a.getImageIcon(), a.getNombre(), a.getTipo(), a.getGenero()
+            });
+        }
+        table.setModel(model);
+        cargarImagenes(table); // Asumiendo que tienes algún método para cargar las imágenes
+    }
+
+    
+    // Otro método ahorrarme código y que se vea clean
+    private <T> List<T> aplicarFiltros(List<T> elementos, LocalDate fecha, String filtroFecha, String filtroGenero, Function<T, LocalDate> getFecha, Function<T, String> getGenero) {
+        return elementos.stream().filter(elemento -> {
+            boolean pasaFiltroFecha = true;
+            boolean pasaFiltroGenero = true;
+
+            // Filtro de fecha
+            if (!filtroFecha.equals("---")) {
+                LocalDate fechaElemento = getFecha.apply(elemento);
+                if (filtroFecha.equals("Antes de")) {
+                    pasaFiltroFecha = fechaElemento.isBefore(fecha);
+                } else if (filtroFecha.equals("Después de")) {
+                    pasaFiltroFecha = fechaElemento.isAfter(fecha) || fechaElemento.isEqual(fecha);
+                }
+            }
+
+            // Filtro de género
+            if (!filtroGenero.equals("---")) {
+                String generoElemento = getGenero.apply(elemento);
+                pasaFiltroGenero = generoElemento.equalsIgnoreCase(filtroGenero);
+            }
+
+            return pasaFiltroFecha && pasaFiltroGenero;
+        }).collect(Collectors.toList());
+    }
+
+//    
+//    private void cargarArtistasFiltrados(List<Artista>, JTable table){
+//    }
     
     /**
      * @param args the command line arguments
@@ -512,8 +624,8 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBoxFecha;
+    private javax.swing.JComboBox<String> jComboBoxGeneros;
     private javax.swing.JLabel jDuracion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
