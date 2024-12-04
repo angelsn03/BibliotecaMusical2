@@ -5,19 +5,20 @@ package models;
  *
  * @author angelsn
  */
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Integrante {
     private String nombre;
     private String apellido;
     private String rol;
-    private Date fechaIngreso;
-    private Date fechaSalida; 
+    private LocalDate fechaIngreso;
+    private LocalDate fechaSalida; 
     private boolean estadoActivo;
 
     public Integrante() {}
 
-    public Integrante(String nombre, String apellido, String rol, Date fechaIngreso, Date fechaSalida, boolean estadoActivo) {
+    public Integrante(String nombre, String apellido, String rol, LocalDate fechaIngreso, LocalDate fechaSalida, boolean estadoActivo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.rol = rol;
@@ -26,6 +27,19 @@ public class Integrante {
         this.estadoActivo = estadoActivo;
     }
 
+    // Constructor que parsea las fechas desde String
+    public Integrante(String nombre, String apellido, String rol, String fechaIngreso, String fechaSalida, boolean estadoActivo) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.rol = rol;
+        this.fechaIngreso = LocalDate.parse(fechaIngreso, formatter);
+        this.fechaSalida = fechaSalida != null && !fechaSalida.isEmpty() 
+            ? LocalDate.parse(fechaSalida, formatter) 
+            : null;
+        this.estadoActivo = estadoActivo;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -50,19 +64,19 @@ public class Integrante {
         this.rol = rol;
     }
 
-    public Date getFechaIngreso() {
+    public LocalDate getFechaIngreso() {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(Date fechaIngreso) {
+    public void setFechaIngreso(LocalDate fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public Date getFechaSalida() {
+    public LocalDate getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(Date fechaSalida) {
+    public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 

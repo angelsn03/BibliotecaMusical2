@@ -17,5 +17,6 @@ public interface IArtistaService {
     Artista buscarArtistaPorId(String id);
     void actualizarArtista(String id, Artista artistaActualizado);
     void eliminarArtista(String id);
+    public void insertarDatosMasivos();
 }
 

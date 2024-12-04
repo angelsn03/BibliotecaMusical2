@@ -48,6 +48,7 @@ public class ArtistaService implements IArtistaService {
         artistaDAO.eliminar(id);
     }
 
+    @Override
     public void insertarDatosMasivos() {
 //        List<Document> artistas = Arrays.asList(
 //    new Document("_id", new ObjectId()).append("nombre", "Gustavo Cerati").append("tipo", "solista")

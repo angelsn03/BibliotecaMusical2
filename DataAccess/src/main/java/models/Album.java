@@ -1,6 +1,7 @@
 package models;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.bson.types.ObjectId;
 
@@ -11,7 +12,7 @@ import org.bson.types.ObjectId;
 public class Album {
     private ObjectId id;
     private String nombre;
-    private Date fechaLanzamiento;
+    private LocalDate fechaLanzamiento;
     private String genero;
     private String portadaPath;
     private List<Cancion> canciones;
@@ -24,23 +25,23 @@ public class Album {
         this.id = id;
     }
 
-    public Album(String nombre, Date fechaLanzamiento, String genero, List<Cancion> canciones){//,Artista artistaId) {
+    public Album(String nombre, String fechaLanzamiento, String genero, List<Cancion> canciones) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.nombre = nombre;
-        this.fechaLanzamiento = fechaLanzamiento;
+        this.fechaLanzamiento = LocalDate.parse(fechaLanzamiento, formatter);
         this.genero = genero;
-        this.portadaPath = "/albumes/"+nombre+".png";
+        this.portadaPath = "/albumes/" + nombre + ".png";
         this.canciones = canciones;
-       // this.artistaId = artistaId;
     }
 
-    public Album(ObjectId id, String nombre, Date fechaLanzamiento, String genero, List<Cancion> canciones){//,Artista artistaId) {
+    public Album(ObjectId id, String nombre, String fechaLanzamiento, String genero, List<Cancion> canciones) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.id = id;
         this.nombre = nombre;
-        this.fechaLanzamiento = fechaLanzamiento;
+        this.fechaLanzamiento = LocalDate.parse(fechaLanzamiento, formatter);
         this.genero = genero;
-        this.portadaPath = "/albumes/"+nombre+".png";
+        this.portadaPath = "/albumes/" + nombre + ".png";
         this.canciones = canciones;
-       // this.artistaId = artistaId;
     }
 
     public ObjectId getId() {
@@ -59,11 +60,11 @@ public class Album {
         this.nombre = nombre;
     }
 
-    public Date getFechaLanzamiento() {
+    public LocalDate getFechaLanzamiento() {
         return fechaLanzamiento;
     }
 
-    public void setFechaLanzamiento(Date fechaLanzamiento) {
+    public void setFechaLanzamiento(LocalDate fechaLanzamiento) {
         this.fechaLanzamiento = fechaLanzamiento;
     }
 
