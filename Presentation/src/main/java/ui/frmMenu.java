@@ -397,7 +397,8 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         cargarCancionesFiltradas(albumes, jTableAlbumes, busqueda);
-        cargarAlbumesFiltrados(albumes, jTableAlbumes, fechaFiltro, jComboBoxFecha, generos);
+        cargarAlbumesFiltrados(albumes, jTableAlbumes, fechaFiltro, jComboBoxFecha, jComboBoxGeneros);
+        cargarArtistasFiltrados(artistas, jTableAlbumes, busqueda, jComboBoxGeneros);
     }//GEN-LAST:event_jButton3MouseClicked
 
     // proximamente añadir una función en la que cuando selecciones 
@@ -522,18 +523,18 @@ public class frmMenu extends javax.swing.JFrame {
         cargarImagenes(table);
     }
 
-    private void cargarArtistasFiltrados(List<Artista> artistas, JTable table, LocalDate fecha, JComboBox<String> comboBoxFecha, JComboBox<String> comboBoxGeneros) {
-        String filtroFecha = comboBoxFecha.getSelectedItem().toString();
-        String filtroGenero = comboBoxGeneros.getSelectedItem().toString();
-
-        // Filtrar los artistas según los filtros de fecha y género
-        List<Artista> artistasFiltrados;
-        artistasFiltrados = aplicarFiltros(artistas,
-                fecha,
-                filtroFecha,
-                filtroGenero, artista -> artista.getFechaIngreso(), // Aquí accedemos a la fecha de ingreso de los artistas
-                Artista::getGenero // Aquí accedemos al género del artista
-        );
+    private void cargarArtistasFiltrados(List<Artista> artistas, JTable table, String filtroNombre, JComboBox<String> generos) {
+        
+        String filtroGenero = generos.getSelectedItem().toString();
+        
+        // Filtrar los artistas según los filtros de nombre y género
+        List<Artista> artistasFiltrados = artistas.stream()
+            .filter(a -> {
+                boolean pasaFiltroNombre = filtroNombre.equals("---") || a.getNombre().toLowerCase().contains(filtroNombre.toLowerCase());
+                boolean pasaFiltroGenero = filtroGenero.equals("---") || a.getGenero().equalsIgnoreCase(filtroGenero);
+                return pasaFiltroNombre && pasaFiltroGenero;
+            })
+            .collect(Collectors.toList());
 
         // Cargar los artistas filtrados en la tabla
         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -546,8 +547,9 @@ public class frmMenu extends javax.swing.JFrame {
             });
         }
         table.setModel(model);
-        cargarImagenes(table); // Asumiendo que tienes algún método para cargar las imágenes
+        cargarImagenes(table); // Método para cargar las imágenes
     }
+
 
     
     // Otro método ahorrarme código y que se vea clean
