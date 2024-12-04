@@ -8,38 +8,38 @@ import org.bson.types.ObjectId;
  * @author Acer
  */
 public class Favorito {
-    private List<Cancion> canciones;
-    private List<Album> albumes;
-    private List<Artista> artistas;
+    private List<ObjectId> canciones;
+    private List<ObjectId> albumes;
+    private List<ObjectId> artistas;
 
     
-    public Favorito(List<Cancion> canciones, List<Album> albumes, List<Artista> artistas) {
+    public Favorito(List<ObjectId> canciones, List<ObjectId> albumes, List<ObjectId> artistas) {
         this.canciones = canciones;
         this.albumes = albumes;
         this.artistas = artistas;
     }
 
-    public List<Cancion> getCanciones() {
+    public List<ObjectId> getCanciones() {
         return canciones;
     }
 
-    public void setCanciones(List<Cancion> canciones) {
+    public void setCanciones(List<ObjectId> canciones) {
         this.canciones = canciones;
     }
 
-    public List<Album> getAlbumes() {
+    public List<ObjectId> getAlbumes() {
         return albumes;
     }
 
-    public void setAlbumes(List<Album> albumes) {
+    public void setAlbumes(List<ObjectId> albumes) {
         this.albumes = albumes;
     }
 
-    public List<Artista> getArtistas() {
+    public List<ObjectId> getArtistas() {
         return artistas;
     }
 
-    public void setArtistas(List<Artista> artistas) {
+    public void setArtistas(List<ObjectId> artistas) {
         this.artistas = artistas;
     }
 
