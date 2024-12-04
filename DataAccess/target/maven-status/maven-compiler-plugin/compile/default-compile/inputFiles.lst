@@ -3,7 +3,6 @@ D:\#CÓDIGOS\Beatree\beatree\DataAccess\src\main\java\interfaces\IConexionBD.jav
 D:\#CÓDIGOS\Beatree\beatree\DataAccess\src\main\java\models\Album.java
 D:\#CÓDIGOS\Beatree\beatree\DataAccess\src\main\java\models\Integrante.java
 D:\#CÓDIGOS\Beatree\beatree\DataAccess\src\main\java\dao\ArtistaDAO.java
-D:\#CÓDIGOS\Beatree\beatree\DataAccess\src\main\java\models\Albumes.java
 D:\#CÓDIGOS\Beatree\beatree\DataAccess\src\main\java\com\mycompany\dataaccess\DataAccess.java
 D:\#CÓDIGOS\Beatree\beatree\DataAccess\src\main\java\models\Artista.java
 D:\#CÓDIGOS\Beatree\beatree\DataAccess\src\main\java\connection\ConexionBD.java

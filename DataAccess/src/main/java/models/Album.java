@@ -1,8 +1,12 @@
 package models;
 
+import java.awt.Image;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import org.bson.types.ObjectId;
 
 /**
@@ -88,6 +92,27 @@ public class Album {
         return canciones;
     }
 
+    // Espero que este método funcione
+    public ImageIcon getImageIcon() {
+        try {
+            InputStream is = getClass().getResourceAsStream(portadaPath);
+            if (is != null) {
+                Image image = ImageIO.read(is);
+                Image scaledImage = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                return new ImageIcon(scaledImage);
+            } else {
+                // Devuelve una imagen por defecto desde el classpath
+                is = getClass().getResourceAsStream("/artistas/default_image.png");
+                Image image = ImageIO.read(is);
+                Image scaledImage = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                return new ImageIcon(scaledImage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+        
     public void setCanciones(List<Cancion> canciones) {
         this.canciones = canciones;
     }

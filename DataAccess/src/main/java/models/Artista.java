@@ -1,8 +1,11 @@
 
 package models;
 
-import java.time.LocalDate;
+import java.awt.Image;
+import java.io.InputStream;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import org.bson.types.ObjectId;
 /**
  *
@@ -25,7 +28,10 @@ public class Artista {
         this.id = new ObjectId();
         this.nombre = nombre;
         this.tipo = tipo;
-        this.imagenPath = "/artistas/"+nombre+".png";
+//        this.imagenPath = "/artistas/"+nombre+".png";
+//        this.imagenPath = System.getProperty("user.dir")
+//                .replace("Presentacion", "DataAccess") + "/src/main/resources/artistas/" + nombre + ".png";
+
         this.genero = genero;
         this.integrantes = integrantes;
     }
@@ -79,6 +85,27 @@ public class Artista {
         this.integrantes = integrantes;
     }
 
+    // Espero que este método funcione
+    public ImageIcon getImageIcon() {
+        try {
+            InputStream is = getClass().getResourceAsStream(imagenPath);
+            if (is != null) {
+                Image image = ImageIO.read(is);
+                Image scaledImage = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                return new ImageIcon(scaledImage);
+            } else {
+                // Devuelve una imagen por defecto desde el classpath
+                is = getClass().getResourceAsStream("/artistas/default_image.png");
+                Image image = ImageIO.read(is);
+                Image scaledImage = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                return new ImageIcon(scaledImage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     @Override
     public String toString() {
         return "Artista{" +
