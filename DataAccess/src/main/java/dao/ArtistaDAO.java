@@ -88,7 +88,7 @@ public class ArtistaDAO implements IArtistaDAO{
             Document doc = new Document("nombre", artista.getNombre())
                     .append("tipo", artista.getTipo())
                     .append("imagenPath", artista.getImagenPath())
-                    .append("género", artista.getGenero())
+                    .append("genero", artista.getGenero())
                     .append("integrantes", artista.getIntegrantes().stream().map(integrante -> 
                         new Document("nombre", integrante.getNombre())
                             .append("apellido", integrante.getApellido())
@@ -104,11 +104,11 @@ public class ArtistaDAO implements IArtistaDAO{
         List<Document> albumesDocs = albumes.stream().map(album -> {
             Document doc = new Document("nombre", album.getNombre())
                     .append("fechaLanzamiento", album.getFechaLanzamiento())
-                    .append("género", album.getGenero())
+                    .append("genero", album.getGenero())
                     .append("portadaPath", album.getPortadaPath())
                     .append("canciones", album.getCanciones().stream().map(cancion -> 
-                        new Document("título", cancion.getTitulo())
-                            .append("duración", cancion.getDuracion())
+                        new Document("titulo", cancion.getTitulo())
+                            .append("duracion", cancion.getDuracion())
                     ).toList());
             return doc;
         }).toList();

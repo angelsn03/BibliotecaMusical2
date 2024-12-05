@@ -25,7 +25,7 @@ public class ConexionBD implements IConexionBD{
         .codecRegistry(pojoCodecRegistry)
         .build();
         mongoClient = MongoClients.create(settings);
-        database = mongoClient.getDatabase("beatree");
+        database = mongoClient.getDatabase("bibliotecamusical2");
     }
     
     
