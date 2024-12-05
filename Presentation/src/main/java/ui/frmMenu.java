@@ -1,21 +1,19 @@
 
 package ui;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme;
 import interfaces.IAlbumService;
 import interfaces.IArtistaService;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -25,15 +23,14 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import models.Album;
 import models.Artista;
 import models.Cancion;
-import org.bson.types.ObjectId;
 import services.AlbumService;
 import services.ArtistaService;
-import services.UsuarioService;
 
 /**
  *
@@ -41,7 +38,6 @@ import services.UsuarioService;
  */
 public class frmMenu extends javax.swing.JFrame implements Runnable{
 
-    private ObjectId usuarioLogueadoId;
     private Thread frameRate;
     private IAlbumService albumService;
     private IArtistaService artistaService;
@@ -55,12 +51,6 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
      * Creates new form frmMenu
      */
     public frmMenu() {
-        try {
-            // Dark theme
-            UIManager.setLookAndFeel(new FlatIntelliJLaf());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         initComponents();
 //        setBackground(Color.DARK_GRAY);
         setLocationRelativeTo(null);
@@ -165,10 +155,6 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
         jAutor = new javax.swing.JLabel();
         btnBaneados = new javax.swing.JButton();
         btnFavoritos = new javax.swing.JButton();
-        jTituloCancion1 = new javax.swing.JLabel();
-        jTituloCancion2 = new javax.swing.JLabel();
-        jTituloCancion3 = new javax.swing.JLabel();
-        jTituloCancion4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableAlbumes = new javax.swing.JTable();
@@ -198,11 +184,12 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
 
             }
         ));
+        jTableCanciones.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTableCanciones.setRowHeight(60);
         jScrollPane1.setViewportView(jTableCanciones);
 
         jLabel2.setText("BlibliotecaMusical2");
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
 
         pnlImagenCancion.setBackground(new java.awt.Color(0, 102, 255));
         pnlImagenCancion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -219,24 +206,26 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
             .addGap(0, 178, Short.MAX_VALUE)
         );
 
+        jTituloCancion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jTituloCancion.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+
+        jDuracion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jDuracion.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+
+        jAlbum.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jAlbum.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+
+        jAutor.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jAutor.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+
         btnBaneados.setText("Añadir a baneados");
+        btnBaneados.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
         btnFavoritos.setText("Añadir a favoritos");
-        btnFavoritos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFavoritosActionPerformed(evt);
-            }
-        });
-
-        jTituloCancion1.setText("Titulo:");
-
-        jTituloCancion2.setText("Autor:");
-
-        jTituloCancion3.setText("Album:");
-
-        jTituloCancion4.setText("Duracion:");
+        btnFavoritos.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
         jButton1.setText("Insersion");
+        jButton1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -259,12 +248,15 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
                 "Albumes"
             }
         ));
+        jTableAlbumes.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTableAlbumes.setRowHeight(60);
         jScrollPane2.setViewportView(jTableAlbumes);
 
         jLabel1.setText("Canciones");
+        jLabel1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
         jLabel3.setText("Artistas");
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
         jTableArtistas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -277,6 +269,7 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
 
             }
         ));
+        jTableArtistas.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTableArtistas.setRowHeight(60);
         jTableArtistas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -288,9 +281,11 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
         jComboBoxGeneros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---" }));
 
         jLabel4.setText("Género");
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Fecha");
+        jLabel5.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
         jButton2.setText("Refrescar");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -302,6 +297,7 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
         jComboBoxFecha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---", "Antes de", "Después de" }));
 
         jButton3.setText("Buscar");
+        jButton3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
@@ -321,9 +317,11 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
 
             }
         ));
+        jTableIntegrantes.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jScrollPane4.setViewportView(jTableIntegrantes);
 
         jLabel6.setText("Integrantes");
+        jLabel6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -332,20 +330,21 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -360,38 +359,29 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jComboBoxGeneros, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTituloCancion1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(82, 82, 82)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addComponent(jTituloCancion2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTituloCancion3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTituloCancion4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTituloCancion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jAlbum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(pnlImagenCancion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnBaneados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1)
-                            .addComponent(btnFavoritos, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(15, 15, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(pnlImagenCancion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnBaneados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton1)
+                                    .addComponent(btnFavoritos, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(103, 103, 103)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTituloCancion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jAutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jAlbum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jDuracion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,16 +410,30 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(94, 94, 94)
+                                        .addComponent(jTituloCancion, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(jAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(32, 32, 32))
+                                            .addComponent(jAlbum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel6))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,24 +444,6 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
                                 .addComponent(btnFavoritos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton1)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTituloCancion1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTituloCancion2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTituloCancion3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTituloCancion4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTituloCancion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27))
@@ -476,7 +462,7 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
@@ -496,36 +482,6 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
     private void jTableArtistasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableArtistasMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTableArtistasMouseClicked
-
-    private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
-        try {
-            // Validar que se ha seleccionado una canción
-            int selectedRow = jTableCanciones.getSelectedRow();
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(this, "Selecciona una canción para añadir a favoritos.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Obtener los datos de la canción seleccionada
-            String titulo = jTableCanciones.getValueAt(selectedRow, 0).toString();
-            String duracion = jTableCanciones.getValueAt(selectedRow, 3).toString();
-
-            // Validar que el usuario logueado tiene un ID asignado
-            if (usuarioLogueadoId == null) {
-                JOptionPane.showMessageDialog(this, "Error: No hay un usuario logueado.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Llamar al servicio para agregar la canción a favoritos
-            UsuarioService usuarioService = new UsuarioService();
-            usuarioService.agregarCancionAFavoritos(usuarioLogueadoId, titulo, duracion);
-
-            JOptionPane.showMessageDialog(this, "Canción añadida a favoritos correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al añadir la canción a favoritos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnFavoritosActionPerformed
 
     // proximamente añadir una función en la que cuando selecciones 
     // un artista en alguna parte se despliegue la info de los integrantes
@@ -554,22 +510,27 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
             });
         }
         table.setModel(model);
+        cargarImagenes(table);
     }
     
     private void cargarCanciones(List<Album> albumes, JTable table){
        DefaultTableModel model = (DefaultTableModel) table.getModel(); 
        model.setRowCount(0);
-       model.setColumnIdentifiers(new String[]{"Título", "Album", "Género", "Duración"});
+       model.setColumnIdentifiers(new String[]{"Título", "Album", "Género", "Duración", ""});
        
        for (Album a : albumes) {
             for (Cancion c : a.getCanciones()) {
                 model.addRow(new Object[]{
-                    c.getTitulo(), a.getNombre(), a.getGenero(), c.getDuracion()
+                    c.getTitulo(), a.getNombre(), a.getGenero(), c.getDuracion(), a.getId()
                 });
             }
         }
         table.setModel(model);
-
+        table.getColumnModel().getColumn(4).setPreferredWidth(0); // Establece el ancho a 0
+        table.getColumnModel().getColumn(4).setMinWidth(0); // Establece el ancho mínimo a 0
+        table.getColumnModel().getColumn(4).setMaxWidth(0); // Establece el ancho máximo a 0
+        table.getColumnModel().getColumn(4).setWidth(0); // Establece el ancho a 0
+        table.getColumnModel().getColumn(4).setResizable(false); // No se puede redimensionar
     }
     
     // método que hice para que no estar repitiendo todo este bloque en cada método cargar
@@ -627,8 +588,6 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
 
         // Add filtered songs to the table model
         cancionesFiltradas.forEach(model::addRow);
-
-        cargarImagenes(table);
     }
     
     /**
@@ -720,51 +679,41 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
         });
     }
     
-    private void actualizarImagenCancion(String portadaPath) {
-        try {
-            InputStream is = getClass().getResourceAsStream(portadaPath);
-            if (is != null) {
-                Image image = ImageIO.read(is);
-                Image scaledImage = image.getScaledInstance(pnlImagenCancion.getWidth(), pnlImagenCancion.getHeight(), Image.SCALE_SMOOTH);
-                JLabel label = new JLabel(new ImageIcon(scaledImage));
-                pnlImagenCancion.removeAll();
-                pnlImagenCancion.add(label);
-                pnlImagenCancion.revalidate();
-                pnlImagenCancion.repaint();
-            } else {
-                pnlImagenCancion.setBackground(Color.RED); // Color de error si no hay imagen
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ClassNotFoundException, InstantiationException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+            try {
+                // Establecer el Look and Feel FlatLaf
+                UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme");
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            ex.printStackTrace();
         }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -802,10 +751,6 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
     private javax.swing.JTable jTableIntegrantes;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jTituloCancion;
-    private javax.swing.JLabel jTituloCancion1;
-    private javax.swing.JLabel jTituloCancion2;
-    private javax.swing.JLabel jTituloCancion3;
-    private javax.swing.JLabel jTituloCancion4;
     private javax.swing.JPanel pnlImagenCancion;
     // End of variables declaration//GEN-END:variables
 
