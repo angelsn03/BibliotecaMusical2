@@ -5,6 +5,7 @@ import interfaces.IUsuarioService;
 import java.util.Date;
 import java.util.List;
 import models.Usuario;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -77,5 +78,11 @@ public class UsuarioService implements IUsuarioService {
             return usuario;
         }
         return null;
+    }
+    
+    public void agregarCancionAFavoritos(ObjectId usuarioId, String titulo, String duracion) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.agregarCancionAFavoritos(usuarioId, titulo, duracion);
+        
     }
 }

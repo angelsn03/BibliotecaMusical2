@@ -3,13 +3,16 @@ package dao;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.client.model.Updates;
 import connection.ConexionBD;
 import interfaces.IUsuarioDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import models.Usuario;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 /**
@@ -71,5 +74,19 @@ public class UsuarioDAO implements IUsuarioDAO{
         MongoCollection<Usuario> collection = getCollection();
         collection.deleteOne(eq("_id", new ObjectId(id)));
         System.out.println("Usuario eliminado correctamente.");
+    }
+    
+    public void agregarCancionAFavoritos(ObjectId usuarioId, String titulo, String duracion) {
+        
+        MongoCollection<Document> collection = getCollection();
+
+        // Crear un identificador único basado en título y duración
+        Document cancion = new Document("titulo", titulo).append("duracion", duracion);
+
+        // Agregar la canción a la lista de favoritos del usuario
+        collection.updateOne(
+                Filters.eq("_id", usuarioId),
+                Updates.addToSet("favoritos.canciones", cancion)
+        );
     }
 }

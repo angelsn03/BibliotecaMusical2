@@ -141,7 +141,7 @@ public class frmIniciarSesion extends javax.swing.JFrame {
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         String correo = txtCorreo.getText();
         String contrasena = new String(pswContra.getPassword());
-        
+       
         if (correo.isEmpty() || contrasena.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Porfavor llenar todos los campos", "ERROR" ,JOptionPane.ERROR_MESSAGE);
             return;

@@ -4,14 +4,18 @@ package ui;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import interfaces.IAlbumService;
 import interfaces.IArtistaService;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -26,8 +30,10 @@ import javax.swing.table.DefaultTableModel;
 import models.Album;
 import models.Artista;
 import models.Cancion;
+import org.bson.types.ObjectId;
 import services.AlbumService;
 import services.ArtistaService;
+import services.UsuarioService;
 
 /**
  *
@@ -35,6 +41,7 @@ import services.ArtistaService;
  */
 public class frmMenu extends javax.swing.JFrame implements Runnable{
 
+    private ObjectId usuarioLogueadoId;
     private Thread frameRate;
     private IAlbumService albumService;
     private IArtistaService artistaService;
@@ -215,6 +222,11 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
         btnBaneados.setText("Añadir a baneados");
 
         btnFavoritos.setText("Añadir a favoritos");
+        btnFavoritos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFavoritosActionPerformed(evt);
+            }
+        });
 
         jTituloCancion1.setText("Titulo:");
 
@@ -464,7 +476,7 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
@@ -484,6 +496,36 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
     private void jTableArtistasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableArtistasMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTableArtistasMouseClicked
+
+    private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
+        try {
+            // Validar que se ha seleccionado una canción
+            int selectedRow = jTableCanciones.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Selecciona una canción para añadir a favoritos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Obtener los datos de la canción seleccionada
+            String titulo = jTableCanciones.getValueAt(selectedRow, 0).toString();
+            String duracion = jTableCanciones.getValueAt(selectedRow, 3).toString();
+
+            // Validar que el usuario logueado tiene un ID asignado
+            if (usuarioLogueadoId == null) {
+                JOptionPane.showMessageDialog(this, "Error: No hay un usuario logueado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Llamar al servicio para agregar la canción a favoritos
+            UsuarioService usuarioService = new UsuarioService();
+            usuarioService.agregarCancionAFavoritos(usuarioLogueadoId, titulo, duracion);
+
+            JOptionPane.showMessageDialog(this, "Canción añadida a favoritos correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al añadir la canción a favoritos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnFavoritosActionPerformed
 
     // proximamente añadir una función en la que cuando selecciones 
     // un artista en alguna parte se despliegue la info de los integrantes
@@ -676,6 +718,25 @@ public class frmMenu extends javax.swing.JFrame implements Runnable{
                 e.printStackTrace();
             }
         });
+    }
+    
+    private void actualizarImagenCancion(String portadaPath) {
+        try {
+            InputStream is = getClass().getResourceAsStream(portadaPath);
+            if (is != null) {
+                Image image = ImageIO.read(is);
+                Image scaledImage = image.getScaledInstance(pnlImagenCancion.getWidth(), pnlImagenCancion.getHeight(), Image.SCALE_SMOOTH);
+                JLabel label = new JLabel(new ImageIcon(scaledImage));
+                pnlImagenCancion.removeAll();
+                pnlImagenCancion.add(label);
+                pnlImagenCancion.revalidate();
+                pnlImagenCancion.repaint();
+            } else {
+                pnlImagenCancion.setBackground(Color.RED); // Color de error si no hay imagen
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     /**

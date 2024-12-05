@@ -3,6 +3,7 @@ package models;
 
 import java.awt.Image;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -19,6 +20,7 @@ public class Artista {
     private String imagenPath;
     private String genero;
     private List<Integrante> integrantes;
+    
 
     // Constructores
     public Artista() {
@@ -34,6 +36,8 @@ public class Artista {
         this.genero = genero;
         this.integrantes = integrantes;
     }
+
+    
 
     // Getters y Setters
     public ObjectId getId() {
@@ -83,6 +87,9 @@ public class Artista {
     public void setIntegrantes(List<Integrante> integrantes) {
         this.integrantes = integrantes;
     }
+
+    
+    
 
     // Espero que este método funcione
     // Funcionó pero dejó de hacerlo XDDDDDDD
