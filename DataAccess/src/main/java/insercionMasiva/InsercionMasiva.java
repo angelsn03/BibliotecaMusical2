@@ -24,6 +24,7 @@ public class InsercionMasiva {
     public InsercionMasiva(){
         artistas = Arrays.asList(
             // Artistas previamente añadidos
+            new Artista("angelsn", "solista", "Electronica", Arrays.asList()),
             new Artista("La Máquina de Hacer Pájaros", "banda", "Rock Progresivo", Arrays.asList(
                 new Integrante("Carlos Alberto", "García", "Vocalista y Tecladista", "1982-01-01", null, true),
                 new Integrante("Rodrigo", "Páez", "Tecladista y Compositor", "1982-01-01", null, true),
@@ -173,6 +174,19 @@ public class InsercionMasiva {
         );
         
         albumes = Arrays.asList(
+            new Album("RUSH METAL","2024-08-12", "Metal", Arrays.asList(
+                new Cancion("Greenest Biker Dude", "3:14"),
+                new Cancion("Something in the Great Beyond", "3:29"),
+                new Cancion("Durch den Vortex", "3:04"),
+                new Cancion("Golden Desert 2024", "3:33"),
+                new Cancion("Ultracoin", "2:40")
+            )),
+            new Album("Green Synths","2024-12-4", "Electrónica", Arrays.asList(
+                new Cancion("Cheetah Theme", "2:14"),
+                new Cancion("34-44", "3:29"),
+                new Cancion("Tetris Theme - Hardstyle Ver.", "3:04"),
+                new Cancion("Trickster", "3:33")
+            )),
             new Album("Películas", "1977-01-01", "Rock", Arrays.asList(
                 new Cancion("La máquina de hacer pájaros", "4:30"),
                 new Cancion("Cuentos de la buena pipa", "3:45"),
