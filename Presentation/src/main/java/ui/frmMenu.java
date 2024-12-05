@@ -1,6 +1,7 @@
 
 package ui;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import interfaces.IAlbumService;
 import interfaces.IArtistaService;
 import java.awt.Component;
@@ -10,8 +11,6 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -20,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import models.Album;
@@ -32,8 +33,9 @@ import services.ArtistaService;
  *
  * @author angelsn
  */
-public class frmMenu extends javax.swing.JFrame {
+public class frmMenu extends javax.swing.JFrame implements Runnable{
 
+    private Thread frameRate;
     private IAlbumService albumService;
     private IArtistaService artistaService;
 //    private ButtonGroup grupo;
@@ -46,10 +48,41 @@ public class frmMenu extends javax.swing.JFrame {
      * Creates new form frmMenu
      */
     public frmMenu() {
+        try {
+            // Dark theme
+            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initComponents();
-        
+//        setBackground(Color.DARK_GRAY);
         setLocationRelativeTo(null);
-        
+        startFramerateThread();
+
+        // Cargar datos en segundo plano
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                artistas = artistaService.obtenerTodosLosArtistas();
+                albumes = albumService.obtenerTodosLosAlbumes();
+                generos = albumes.stream()
+                        .map(Album::getGenero)
+                        .distinct()
+                        .collect(Collectors.toList());
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                // Actualiza la interfaz después de cargar los datos
+                cargarArtistas(artistas, jTableArtistas);
+                cargarAlbumes(albumes, jTableAlbumes);
+                cargarCanciones(albumes, jTableCanciones);
+                for (String genero : generos) {
+                    jComboBoxGeneros.addItem(genero);
+                }
+            }
+        }.execute();
 //        grupo = new ButtonGroup();
         
         this.artistaService = new ArtistaService();
@@ -89,6 +122,23 @@ public class frmMenu extends javax.swing.JFrame {
         cargarCanciones(albumes, jTableCanciones);
     }
 
+    private void startFramerateThread() {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(16); // Aproximadamente 60 FPS
+                    SwingUtilities.invokeLater(() -> {
+                        repaint(); // Actualiza la interfaz gráfica
+                    });
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        }).start();
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -697,4 +747,9 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jTituloCancion4;
     private javax.swing.JPanel pnlImagenCancion;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
