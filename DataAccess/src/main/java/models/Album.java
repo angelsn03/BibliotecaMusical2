@@ -34,17 +34,7 @@ public class Album {
         this.nombre = nombre;
         this.fechaLanzamiento = LocalDate.parse(fechaLanzamiento, formatter);
         this.genero = genero;
-        this.portadaPath = "/albumes/" + nombre + ".png";
-        this.canciones = canciones;
-    }
-
-    public Album(ObjectId id, String nombre, String fechaLanzamiento, String genero, List<Cancion> canciones) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        this.id = id;
-        this.nombre = nombre;
-        this.fechaLanzamiento = LocalDate.parse(fechaLanzamiento, formatter);
-        this.genero = genero;
-        this.portadaPath = "/albumes/" + nombre + ".png";
+        this.portadaPath = "/albumes/"+nombre+".png";
         this.canciones = canciones;
     }
 

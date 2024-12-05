@@ -28,10 +28,9 @@ public class Artista {
         this.id = new ObjectId();
         this.nombre = nombre;
         this.tipo = tipo;
-//        this.imagenPath = "/artistas/"+nombre+".png";
+        this.imagenPath = "/artistas/"+nombre+".png";
 //        this.imagenPath = System.getProperty("user.dir")
 //                .replace("Presentacion", "DataAccess") + "/src/main/resources/artistas/" + nombre + ".png";
-
         this.genero = genero;
         this.integrantes = integrantes;
     }
@@ -86,6 +85,7 @@ public class Artista {
     }
 
     // Espero que este método funcione
+    // Funcionó pero dejó de hacerlo XDDDDDDD
     public ImageIcon getImageIcon() {
         try {
             InputStream is = getClass().getResourceAsStream(imagenPath);
